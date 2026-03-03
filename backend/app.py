@@ -21,7 +21,10 @@ from stem_separator import StemSeparator
 # -----------------------------
 # Database Setup
 # -----------------------------
-DB_NAME = "cognify.db"
+# Directory containing this file (i.e. the backend/ folder)
+_BASE_DIR = os.path.dirname(os.path.abspath(__file__))
+
+DB_NAME = os.path.join(_BASE_DIR, "cognify.db")
 
 def init_db():
     conn = sqlite3.connect(DB_NAME)
@@ -63,9 +66,9 @@ logger.addHandler(handler)
 # -----------------------------
 # Flask app
 # -----------------------------
-UPLOAD_FOLDER = os.path.join(os.getcwd(), 'backend', 'uploads')
+UPLOAD_FOLDER = os.path.join(_BASE_DIR, 'uploads')
 if not os.path.exists(UPLOAD_FOLDER):
-    os.makedirs(UPLOAD_FOLDER)
+    os.makedirs(UPLOAD_FOLDER, exist_ok=True)
 
 # Base URL for audio/stem links returned to the frontend
 # On Render, RENDER_EXTERNAL_URL is injected automatically.
