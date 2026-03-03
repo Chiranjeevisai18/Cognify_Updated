@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { Download, FileText, Music, Code, FileImage, Check, Mic, MicOff } from 'lucide-react';
 import { AudioAnalysis } from '../App';
+import { API_BASE_URL } from '../utils/api';
 import jsPDF from 'jspdf';
 import autoTable from 'jspdf-autotable';
 
@@ -112,7 +113,7 @@ export const ExportPanel: React.FC<ExportPanelProps> = ({ analysis, audioFile })
           const originalFilename = analysis.audioUrl.split('/').pop();
           if (!originalFilename) throw new Error("Invalid audio filename");
 
-          const res = await fetch(`http://localhost:5000/api/mix/${originalFilename}/${formatId}`);
+          const res = await fetch(`${API_BASE_URL}/api/mix/${originalFilename}/${formatId}`);
           if (!res.ok) throw new Error("Download failed");
 
           const blob = await res.blob();
@@ -179,7 +180,7 @@ export const ExportPanel: React.FC<ExportPanelProps> = ({ analysis, audioFile })
   </part-list>
   <part id="P1">
     <measure number="1">
-      ${analysis.chords.map((chord, i) => `
+      ${analysis.chords.map((chord, _i) => `
         <harmony>
           <root>
             <root-step>${chord.chord.charAt(0)}</root-step>

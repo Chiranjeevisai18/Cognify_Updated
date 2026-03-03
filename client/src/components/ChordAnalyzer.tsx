@@ -1,14 +1,15 @@
 import React, { useState, useCallback } from 'react';
+import { API_BASE_URL } from '../utils/api';
 import { useNavigate, useLocation } from 'react-router-dom';
 import { UserButton } from '@clerk/clerk-react';
-import { Upload, Music, Download, Guitar, FileMusic, AudioWaveform as Waveform, Music2, FolderOpen, Save, Piano } from 'lucide-react';
+import { Music, Guitar, FileMusic, AudioWaveform as Waveform, Music2, FolderOpen, Save, Piano } from 'lucide-react';
 import { AudioUpload } from './AudioUpload';
 import { AudioPlayer } from './AudioPlayer';
 import { ChordTimeline } from './ChordTimeline';
 import { ExportPanel } from './ExportPanel';
 import { Library } from './Library';
 import { analyzeChordsAI } from '../utils/chordAnalysis';
-import { AudioAnalysis, ChordData } from '../App';
+import { AudioAnalysis } from '../App';
 
 
 
@@ -62,7 +63,7 @@ export const ChordAnalyzer: React.FC = () => {
     if (!analysis || !audioFile) return;
     try {
       setSaveStatus('saving');
-      const res = await fetch('http://localhost:5000/api/save', {
+      const res = await fetch(`${API_BASE_URL}/api/save`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({

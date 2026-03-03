@@ -1,7 +1,10 @@
 flask
 flask-cors
+gunicorn
+asgiref
 chord-extractor
 librosa
 numpy
+scipy
 demucs
 soundfile

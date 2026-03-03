@@ -1,11 +1,12 @@
 import { AudioAnalysis } from '../App';
+import { API_BASE_URL } from './api';
 
 // Real-time AI chord analysis using backend API
 export const analyzeChordsAI = async (audioFile: File): Promise<AudioAnalysis> => {
   const formData = new FormData();
   formData.append('file', audioFile);
 
-  const response = await fetch('http://localhost:5000/analyze-chords', {
+  const response = await fetch(`${API_BASE_URL}/analyze-chords`, {
     method: 'POST',
     body: formData,
   });

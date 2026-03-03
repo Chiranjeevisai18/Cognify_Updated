@@ -1,0 +1,16 @@
+services:
+  - type: web
+    name: cognify-backend
+    runtime: python
+    rootDir: backend
+    buildCommand: pip install -r requirements.txt
+    startCommand: gunicorn app:app --bind 0.0.0.0:$PORT --timeout 120 --workers 1
+    envVars:
+      - key: ALLOWED_ORIGIN
+        value: https://your-app.vercel.app   # Replace with your actual Vercel URL after deploying
+      - key: LOG_LEVEL
+        value: INFO
+    disk:
+      name: uploads
+      mountPath: /opt/render/project/src/backend/uploads
+      sizeGB: 5

@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { Book, Play, Calendar, User, Trash2 } from 'lucide-react';
 import { AudioAnalysis } from '../App';
+import { API_BASE_URL } from '../utils/api';
 
 interface Song {
     id: string;
@@ -28,7 +29,7 @@ export const Library: React.FC<LibraryProps> = ({ onLoad, isOpen, onClose }) => 
     const fetchSongs = async () => {
         try {
             setLoading(true);
-            const res = await fetch('http://localhost:5000/api/songs');
+            const res = await fetch(`${API_BASE_URL}/api/songs`);
             if (res.ok) {
                 const data = await res.json();
                 setSongs(data);
@@ -42,7 +43,7 @@ export const Library: React.FC<LibraryProps> = ({ onLoad, isOpen, onClose }) => 
 
     const loadSong = async (id: string) => {
         try {
-            const res = await fetch(`http://localhost:5000/api/songs/${id}`);
+            const res = await fetch(`${API_BASE_URL}/api/songs/${id}`);
             if (res.ok) {
                 const analysis = await res.json();
                 onLoad(analysis);
@@ -58,7 +59,7 @@ export const Library: React.FC<LibraryProps> = ({ onLoad, isOpen, onClose }) => 
         if (!confirm('Are you sure you want to delete this analysis?')) return;
 
         try {
-            const res = await fetch(`http://localhost:5000/api/songs/${id}`, { method: 'DELETE' });
+            const res = await fetch(`${API_BASE_URL}/api/songs/${id}`, { method: 'DELETE' });
             if (res.ok) {
                 setSongs(songs.filter(s => s.id !== id));
             }

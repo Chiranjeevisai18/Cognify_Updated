@@ -67,9 +67,16 @@ UPLOAD_FOLDER = os.path.join(os.getcwd(), 'backend', 'uploads')
 if not os.path.exists(UPLOAD_FOLDER):
     os.makedirs(UPLOAD_FOLDER)
 
+# Base URL for audio/stem links returned to the frontend
+# On Render, RENDER_EXTERNAL_URL is injected automatically.
+BASE_URL = os.getenv("RENDER_EXTERNAL_URL", "http://localhost:5000").rstrip("/")
+
+# CORS: allow specific origin in production, all origins in dev
+ALLOWED_ORIGIN = os.getenv("ALLOWED_ORIGIN", "*")
+
 app = Flask(__name__)
 app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
-CORS(app, resources={r"/*": {"origins": "*"}}, methods=["GET", "POST", "DELETE", "OPTIONS"])
+CORS(app, resources={r"/*": {"origins": ALLOWED_ORIGIN}}, methods=["GET", "POST", "DELETE", "OPTIONS"])
 asgi_app = WsgiToAsgi(app)
 
 # -----------------------------
@@ -210,7 +217,7 @@ def analyze_chords():
         file.save(save_path)
         
         # Audio URL for frontend
-        audio_url = f"http://localhost:5000/uploads/{unique_filename}"
+        audio_url = f"{BASE_URL}/uploads/{unique_filename}"
         
         logger.debug(f"Saved file at: {save_path}")
     except Exception as e:
@@ -252,7 +259,7 @@ def analyze_chords():
             rel_path = os.path.relpath(path, app.config['UPLOAD_FOLDER'])
             # Ensure forward slashes for URL
             rel_path = rel_path.replace('\\', '/')
-            stem_urls[name] = f"http://localhost:5000/uploads/{rel_path}"
+            stem_urls[name] = f"{BASE_URL}/uploads/{rel_path}"
             
         logger.info(f"Separation complete. Chords from {os.path.basename(chord_source)}, Melody from {os.path.basename(melody_source)}")
 
