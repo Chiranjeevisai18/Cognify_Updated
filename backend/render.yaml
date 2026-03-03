@@ -11,6 +11,8 @@ services:
         value: https://your-app.vercel.app   # Replace with your actual Vercel URL after deploying
       - key: LOG_LEVEL
         value: INFO
+      - key: PIP_NO_BUILD_ISOLATION
+        value: "1"
     disk:
       name: uploads
       mountPath: /opt/render/project/src/backend/uploads
