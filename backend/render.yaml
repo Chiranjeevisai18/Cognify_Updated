@@ -4,7 +4,7 @@ services:
     runtime: python
     pythonVersion: "3.11.9"
     rootDir: backend
-    buildCommand: pip install "numpy<2" && pip install --no-build-isolation -r requirements.txt
+    buildCommand: pip install "numpy<2" wheel && pip install --no-build-isolation -r requirements.txt
     startCommand: gunicorn app:app --bind 0.0.0.0:$PORT --timeout 120 --workers 1
     envVars:
       - key: ALLOWED_ORIGIN
