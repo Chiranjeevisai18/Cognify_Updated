@@ -4,7 +4,7 @@ gunicorn
 asgiref
 chord-extractor
 librosa
-numpy
+numpy<2.0.0
 scipy
 demucs
 soundfile
