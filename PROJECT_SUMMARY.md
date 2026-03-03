@@ -5,6 +5,7 @@
 
 ## 2. Technical Architecture
 
+
 ### Backend (Python/Flask)
 The core intelligence layer processing raw audio.
 *   **Stem Separation**: Implemented using **Hybrid Transformer Demucs (HTDemucs)** via `torchaudio`. It splits a stereo mix into 4 discrete stems: *Vocals, Drums, Bass, Other*.
@@ -12,6 +13,7 @@ The core intelligence layer processing raw audio.
 *   **Melody Extraction**: Uses **Librosa's implementations (PYIN)** to extract fundamental frequency (f0) contours, converting Hertz to musical notes.
 *   **Key Detection**: Analyzes the global chroma features to determine the root key (e.g., C Major, F# Minor), enabling "Scale Degree" analysis.
 *   **Storage**: SQLite database tracks Song Metadata and Analysis JSON blobs for instant retrieval.
+
 
 ### Frontend (React + TypeScript)
 A high-performance interactive visualisation layer.
